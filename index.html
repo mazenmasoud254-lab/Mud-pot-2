@@ -1008,4 +1008,705 @@
         
         /* Responsive Design */
         @media (max-width: 992px) {
-            .hero h1 { font-size:
+            .hero h1 { font-size: 2.8rem; }
+            .scene-container { height: 450px; }
+            .model-container { height: 600px; }
+            .scene-3d { transform: translate(-50%, -50%) rotateX(-10deg) rotateY(0deg) scale(0.9); }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; gap: 1rem; }
+            nav ul { flex-wrap: wrap; justify-content: center; }
+            .hero { padding: 140px 0 60px; }
+            .hero h1 { font-size: 2.2rem; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+            .btn { width: 100%; max-width: 300px; justify-content: center; }
+            .controls-3d { flex-wrap: wrap; }
+            .scene-3d { transform: translate(-50%, -50%) rotateX(-15deg) rotateY(0deg) scale(0.8); }
+            .model-container { height: 550px; }
+        }
+        
+        @media (max-width: 480px) {
+            .section-title h2 { font-size: 2.2rem; }
+            .stats { grid-template-columns: 1fr; }
+            .model-container { height: 500px; padding: 1rem; }
+            .scene-container { height: 350px; }
+            .controls-3d { flex-direction: column; align-items: center; }
+            .control-btn-3d { width: 100%; max-width: 250px; }
+            .team-members { grid-template-columns: 1fr; }
+            .scene-3d { transform: translate(-50%, -50%) rotateX(-10deg) rotateY(0deg) scale(0.7); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <span>3D MudCooler</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#model">3D Model</a></li>
+                    <li><a href="#parts">Components</a></li>
+                    <li><a href="#setup">Setup Guide</a></li>
+                    <li><a href="#team">Our Team</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Interactive 3D Mud Pot Cooler</h1>
+            <p>Explore the complete DIY cooling system in full 3D. Rotate, zoom, and examine every component from all angles.</p>
+            <div class="cta-buttons">
+                <a href="#model" class="btn btn-primary">
+                    <i class="fas fa-play-circle"></i> Explore 3D Model
+                </a>
+                <a href="#parts" class="btn btn-secondary">
+                    <i class="fas fa-shopping-cart"></i> View Components
+                </a>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">360°</div>
+                    <div class="stat-label">Full Rotation</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">3D Components</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">Real-time</div>
+                    <div class="stat-label">Interactive View</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">Drag</div>
+                    <div class="stat-label">To Rotate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive 3D Model Section -->
+    <section id="model" class="model-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Interactive 3D Exploration</h2>
+                <p>Click and drag to rotate the model • Use buttons for preset views</p>
+            </div>
+            
+            <div class="model-container">
+                <div class="view-angle">
+                    <i class="fas fa-arrows-rotate"></i>
+                    <span>Rotation: <span id="rotationX">0°</span> horizontal, <span id="rotationY">0°</span> vertical</span>
+                </div>
+                
+                <div class="scene-container" id="sceneContainer">
+                    <div class="scene-3d" id="scene3d">
+                        <!-- Mud Pot -->
+                        <div class="component-3d mud-pot-3d">
+                            <div class="pot-body-3d"></div>
+                            <div class="pot-texture"></div>
+                        </div>
+                        
+                        <!-- PC Fan -->
+                        <div class="component-3d fan-3d">
+                            <div class="fan-housing-3d"></div>
+                            <div class="fan-blades-3d-container">
+                                <div class="fan-blade-3d"></div>
+                                <div class="fan-blade-3d"></div>
+                                <div class="fan-blade-3d"></div>
+                                <div class="fan-blade-3d"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fan Speed Control -->
+                <div class="fan-speed-control">
+                    <input type="range" min="0.5" max="3" value="1.5" step="0.1" class="speed-slider" id="fanSpeed">
+                    <div class="speed-label">
+                        <span>Slow</span>
+                        <span>Fan Speed</span>
+                        <span>Fast</span>
+                    </div>
+                </div>
+                
+                <div class="controls-3d">
+                    <button class="control-btn-3d" onclick="setView('front')">
+                        <i class="fas fa-eye"></i> Front View
+                    </button>
+                    <button class="control-btn-3d" onclick="setView('top')">
+                        <i class="fas fa-angle-up"></i> Top View
+                    </button>
+                    <button class="control-btn-3d" onclick="setView('side')">
+                        <i class="fas fa-arrows-left-right"></i> Side View
+                    </button>
+                    <button class="control-btn-3d" onclick="setView('back')">
+                        <i class="fas fa-undo"></i> Back View
+                    </button>
+                    <button class="control-btn-3d" onclick="resetView()">
+                        <i class="fas fa-redo"></i> Reset View
+                    </button>
+                </div>
+                
+                <div class="view-info">
+                    <i class="fas fa-mouse-pointer"></i>
+                    <span>Drag the model to rotate • Click buttons for preset views</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Electronic Components Section -->
+    <section id="parts" class="parts-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Complete Electronic Components</h2>
+                <p>All parts required to build your own mud pot air cooler</p>
+            </div>
+            
+            <div class="parts-grid">
+                <div class="part-card">
+                    <div class="part-icon terracotta">
+                        <i class="fas fa-mug-hot"></i>
+                    </div>
+                    <div class="part-content">
+                        <h3>Terracotta Clay Pot</h3>
+                        <p>The heart of the cooling system. Made from natural porous clay, it absorbs and retains water for continuous evaporative cooling.</p>
+                        <div class="part-specs">
+                            <div class="spec-item">
+                                <span>Material</span>
+                                <span style="color: var(--primary); font-weight: 600;">Natural Terracotta</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Size</span>
+                                <span style="color: var(--primary); font-weight: 600;">Large (10L)</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Function</span>
+                                <span style="color: var(--primary); font-weight: 600;">Cooling Element</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="part-card">
+                    <div class="part-icon fan">
+                        <i class="fas fa-fan"></i>
+                    </div>
+                    <div class="part-content">
+                        <h3>PC Cooling Fan (120mm)</h3>
+                        <p>Standard computer case fan with 4-pin connector. Provides airflow for the evaporative cooling process.</p>
+                        <div class="part-specs">
+                            <div class="spec-item">
+                                <span>Voltage</span>
+                                <span style="color: var(--primary); font-weight: 600;">5V DC</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Current</span>
+                                <span style="color: var(--primary); font-weight: 600;">0.2A</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Speed</span>
+                                <span style="color: var(--primary); font-weight: 600;">1500 RPM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="part-card">
+                    <div class="part-icon usb">
+                        <i class="fas fa-usb"></i>
+                    </div>
+                    <div class="part-content">
+                        <h3>USB Cable & Connector</h3>
+                        <p>Standard USB-A to 4-pin fan connector cable. Powers the fan from any USB power source (laptop, power bank, adapter).</p>
+                        <div class="part-specs">
+                            <div class="spec-item">
+                                <span>Type</span>
+                                <span style="color: var(--primary); font-weight: 600;">USB-A Male</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Length</span>
+                                <span style="color: var(--primary); font-weight: 600;">1 Meter</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Connector</span>
+                                <span style="color: var(--primary); font-weight: 600;">4-pin PWM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FIXED: Digital Thermometer range from 37°C to 26°C -->
+                <div class="part-card">
+                    <div class="part-icon thermometer">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <div class="part-content">
+                        <h3>Digital Thermometer</h3>
+                        <p>Mini digital thermometer to measure temperature drop. Shows cooling effectiveness from 34°C to 26°C as in video.</p>
+                        <div class="part-specs">
+                            <div class="spec-item">
+                                <span>Range</span>
+                                <span style="color: var(--primary); font-weight: 600;">37°C to 26°C</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Accuracy</span>
+                                <span style="color: var(--primary); font-weight: 600;">±1°C</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Display</span>
+                                <span style="color: var(--primary); font-weight: 600;">LCD Digital</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="part-card">
+                    <div class="part-icon power">
+                        <i class="fas fa-battery-full"></i>
+                    </div>
+                    <div class="part-content">
+                        <h3>USB Power Source</h3>
+                        <p>Can use laptop USB port, power bank, USB wall adapter, or battery. Provides 5V DC power to run the cooling fan.</p>
+                        <div class="part-specs">
+                            <div class="spec-item">
+                                <span>Voltage</span>
+                                <span style="color: var(--primary); font-weight: 600;">5V DC</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Current</span>
+                                <span style="color: var(--primary); font-weight: 600;">1-2A</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Options</span>
+                                <span style="color: var(--primary); font-weight: 600;">Laptop/Power Bank/Battery</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="part-card">
+                    <div class="part-icon wires">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="part-content">
+                        <h3>Connecting Wires & Tools</h3>
+                        <p>Basic electrical wires, soldering iron (optional), and hot glue gun for assembly and securing components.</p>
+                        <div class="part-specs">
+                            <div class="spec-item">
+                                <span>Wire Gauge</span>
+                                <span style="color: var(--primary); font-weight: 600;">22 AWG</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Tools</span>
+                                <span style="color: var(--primary); font-weight: 600;">Hot Glue Gun</span>
+                            </div>
+                            <div class="spec-item">
+                                <span>Optional</span>
+                                <span style="color: var(--primary); font-weight: 600;">Soldering Iron</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Setup Guide Section -->
+    <section id="setup" class="setup-guide">
+        <div class="container">
+            <div class="section-title">
+                <h2>Step-by-Step Assembly Guide</h2>
+                <p>Follow these simple steps to build your mud pot cooler</p>
+            </div>
+            
+            <div class="setup-steps">
+                <div class="setup-step">
+                    <i class="fas fa-tint"></i>
+                    <h4>1. Prepare the Pot</h4>
+                    <p>Soak the terracotta pot in water for 2 hours to fully saturate the clay pores.</p>
+                </div>
+                
+                <div class="setup-step">
+                    <i class="fas fa-plug"></i>
+                    <h4>2. Connect Fan to USB</h4>
+                    <p>Connect the 4-pin fan connector to the USB cable. Match red wire to +5V, black to ground.</p>
+                </div>
+                
+                <div class="setup-step">
+                    <i class="fas fa-wind"></i>
+                    <h4>3. Mount the Fan</h4>
+                    <p>Position the fan above the pot to pull air through the wet clay surface.</p>
+                </div>
+                
+                <div class="setup-step">
+                    <i class="fas fa-bolt"></i>
+                    <h4>4. Power Connection</h4>
+                    <p>Connect USB to power source (laptop, power bank, battery, or USB adapter).</p>
+                </div>
+                
+                <!-- Updated to show 37°C to 26°C cooling -->
+                <div class="setup-step">
+                    <i class="fas fa-thermometer"></i>
+                    <h4>5. Temperature Testing</h4>
+                    <p>Use digital thermometer to measure temperature drop (37°C → 26°C).</p>
+                </div>
+                
+                <div class="setup-step">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>6. Final Assembly</h4>
+                    <p>Secure all components with hot glue and ensure proper airflow direction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Project Team</h2>
+                <p>Meet the talented individuals behind this innovative project</p>
+            </div>
+            
+            <div class="team-members">
+                <!-- Team Leader -->
+                <div class="team-member leader">
+                    <div class="member-avatar">
+                        MS
+                    </div>
+                    <h3>Momen Sayed</h3>
+                    <div class="team-role">Team Leader & Project Manager</div>
+                    <p>Oversees the entire project, coordinates team efforts, and ensures project milestones are met on schedule.</p>
+                </div>
+                
+                <!-- Website Creator -->
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Mazen Masoud</h3>
+                    <div class="team-role">Website Creator & Engineer</div>
+                    <p>Designed and developed the entire interactive 3D website, implementing the 3D model and all interactive features.</p>
+                </div>
+                
+                <!-- Researchers -->
+                <div class="team-member">
+                    <div class="member-avatar">
+                        YG
+                    </div>
+                    <h3>Yousef Gamal</h3>
+                    <div class="team-role">Researcher & Information Specialist</div>
+                    <p>Conducted extensive research on evaporative cooling technology and gathered technical specifications for all components.</p>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-avatar">
+                        FW
+                    </div>
+                    <h3>Fares Walid</h3>
+                    <div class="team-role">Researcher & Information Gatherer</div>
+                    <p>Collected data on traditional cooling methods and compiled comprehensive information about the DIY building process.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">
+                        <i class="fas fa-cube"></i>
+                        <span>3D MudCooler</span>
+                    </div>
+                    <p>An interactive educational project demonstrating traditional evaporative cooling technology with modern 3D visualization.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="color: white; margin-bottom: 1.5rem; font-size: 1.3rem;">Quick Links</h3>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 0.8rem;"><a href="#model" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: var(--transition);">Interactive 3D Model</a></li>
+                        <li style="margin-bottom: 0.8rem;"><a href="#parts" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: var(--transition);">Components List</a></li>
+                        <li style="margin-bottom: 0.8rem;"><a href="#setup" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: var(--transition);">Assembly Guide</a></li>
+                        <li style="margin-bottom: 0.8rem;"><a href="#team" style="color: rgba(255,255,255,0.8); text-decoration: none; transition: var(--transition);">Meet Our Team</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 style="color: white; margin-bottom: 1.5rem; font-size: 1.3rem;">Project Based On</h3>
+                    <p style="margin-bottom: 1rem; color: rgba(255,255,255,0.8);">DIY Tutorial: "How to make MUD POT Air COOLER at Home" by A2C Arts And Crafts</p>
+                    <p style="color: rgba(255,255,255,0.8);">Educational project for demonstrating evaporative cooling principles.</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Interactive 3D Mud Pot Cooler Project. All rights reserved.</p>
+                <p style="margin-top: 0.5rem; color: rgba(255,255,255,0.6);">Created by Mazen Masoud (Website Engineer) | Led by Momen Sayed | Research by Yousef Gamal & Fares Walid</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced 3D Model Interaction
+        let scene = document.getElementById('scene3d');
+        let container = document.getElementById('sceneContainer');
+        let fanSpeedSlider = document.getElementById('fanSpeed');
+        let fanBlades = document.querySelector('.fan-blades-3d-container');
+        let isDragging = false;
+        let startX, startY;
+        let rotationX = 0;
+        let rotationY = 0;
+        let currentRotationX = 0;
+        let currentRotationY = 0;
+        let isAutoRotating = false; // CHANGED FROM true TO false - THIS STOPS AUTO ROTATION
+        let autoRotateSpeed = 0.3;
+        let lastTime = 0;
+        
+        // Rotation display elements
+        const rotationXDisplay = document.getElementById('rotationX');
+        const rotationYDisplay = document.getElementById('rotationY');
+        
+        // Initialize fan speed
+        fanBlades.style.animationDuration = (3 / 1.5) + 's';
+        
+        // Fan speed control
+        fanSpeedSlider.addEventListener('input', (e) => {
+            const speed = e.target.value;
+            fanBlades.style.animationDuration = (3 / speed) + 's';
+        });
+        
+        // Mouse drag interaction
+        container.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            container.style.cursor = 'grabbing';
+            isAutoRotating = false;
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const deltaX = e.clientX - startX;
+            const deltaY = e.clientY - startY;
+            
+            rotationY = currentRotationY + deltaX * 0.5;
+            rotationX = currentRotationX - deltaY * 0.3;
+            
+            updateRotation();
+        });
+        
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                currentRotationX = rotationX;
+                currentRotationY = rotationY;
+                container.style.cursor = 'grab';
+            }
+        });
+        
+        // Touch interaction for mobile
+        container.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+            e.preventDefault();
+            isAutoRotating = false;
+        });
+        
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            
+            const deltaX = e.touches[0].clientX - startX;
+            const deltaY = e.touches[0].clientY - startY;
+            
+            rotationY = currentRotationY + deltaX * 0.5;
+            rotationX = currentRotationX - deltaY * 0.3;
+            
+            updateRotation();
+            e.preventDefault();
+        });
+        
+        document.addEventListener('touchend', () => {
+            if (isDragging) {
+                isDragging = false;
+                currentRotationX = rotationX;
+                currentRotationY = rotationY;
+            }
+        });
+        
+        // Auto rotation function - WILL NOT RUN because isAutoRotating = false
+        function autoRotate(timestamp) {
+            if (!lastTime) lastTime = timestamp;
+            const deltaTime = timestamp - lastTime;
+            lastTime = timestamp;
+            
+            if (isAutoRotating && !isDragging) {
+                rotationY += autoRotateSpeed * (deltaTime / 16);
+                updateRotation();
+                currentRotationY = rotationY;
+                currentRotationX = rotationX;
+            }
+            
+            if (isAutoRotating) {
+                requestAnimationFrame(autoRotate);
+            }
+        }
+        
+        // Update rotation and apply to all 3D components
+        function updateRotation() {
+            scene.style.transform = `translate(-50%, -50%) rotateX(${-15 + rotationX}deg) rotateY(${15 + rotationY}deg)`;
+            
+            // Update all 3D components with the same rotation
+            document.querySelectorAll('.component-3d').forEach(component => {
+                component.style.setProperty('--rotate-y', `${rotationY}deg`);
+                component.style.setProperty('--rotate-x', `${rotationX}deg`);
+            });
+            
+            // Update rotation display
+            rotationXDisplay.textContent = `${Math.round(rotationX)}°`;
+            rotationYDisplay.textContent = `${Math.round(rotationY)}°`;
+        }
+        
+        // Preset views
+        function setView(viewType) {
+            isAutoRotating = false;
+            
+            switch(viewType) {
+                case 'front':
+                    rotationX = 0;
+                    rotationY = 0;
+                    break;
+                case 'top':
+                    rotationX = -80;
+                    rotationY = 0;
+                    break;
+                case 'side':
+                    rotationX = 0;
+                    rotationY = 90;
+                    break;
+                case 'back':
+                    rotationX = 0;
+                    rotationY = 180;
+                    break;
+            }
+            currentRotationX = rotationX;
+            currentRotationY = rotationY;
+            updateRotation();
+        }
+        
+        function resetView() {
+            isAutoRotating = false;
+            rotationX = 0;
+            rotationY = 0;
+            currentRotationX = 0;
+            currentRotationY = 0;
+            updateRotation();
+        }
+        
+        // Add interactive hover effects to components
+        document.querySelectorAll('.component-3d').forEach(component => {
+            component.addEventListener('mouseenter', () => {
+                component.style.transform += ' scale(1.05)';
+            });
+            
+            component.addEventListener('mouseleave', () => {
+                component.style.transform = component.style.transform.replace(' scale(1.05)', '');
+            });
+        });
+        
+        // Initialize
+        updateRotation();
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a, .cta-buttons a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // Active nav link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.scrollY >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Animate stats counters
+        document.addEventListener('DOMContentLoaded', () => {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const text = stat.textContent;
+                if (!isNaN(parseInt(text))) {
+                    const target = parseInt(text);
+                    let current = 0;
+                    const increment = target / 30;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        stat.textContent = Math.floor(current);
+                    }, 30);
+                }
+            });
+        });
+        
+        // Add some ambient lighting effect
+        const ambientLight = document.createElement('div');
+        ambientLight.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(0, 168, 255, 0.1), transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        `;
+        document.querySelector('.scene-container').appendChild(ambientLight);
+    </script>
+</body>
+</html>
